@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Micromedia{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                {% if items|length > 0%}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Available</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-right">Price</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td><img width="80px" src="{{item.product.image}}" /> </td>
+                            <td><a href="{{ path('product', {'id' : item.product.id}) }}" >{{ item.product.ProductName }}</a></td>
+                            <td>In stock</td>
+                            <td><input class="form-control" type="text" value="{{ item.quantity }}" /></td>
+                            <td class="text-right">{{item.product.price * item.quantity}}</td>
+                            <td class="text-right"><a class="btn btn-sm btn-danger" href="{{ path('app_remove', {'id' :item.product.id}) }}"><i class="fa fa-trash"></i> </a> </td>
+                        </tr>
+
+                    {% endfor %} 
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td class="text-right"><strong>{{ total }} DT</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% else %}
+                <h1 class="text-center">Cart is Empty !! Let's Go Shopping </h1>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                {% if items|length == 0 %}
+                <div class="col-sm-12 col-md-3 text-right"></div>
+                {% endif %}
+                <div class="col-sm-12  col-md-6 text-right">
+                    <a href="{{ path('index')}}" class="btn btn-lg btn-block btn-primary text-uppercase">Continue Shopping</a>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    {% if items|length > 0 %}
+                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

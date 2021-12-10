@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Micromedia{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index">Home</a></li>
+                    <li class="breadcrumb-item"><a href="category">Category</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sub-category</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-3">
+            <div class="card bg-light mb-3">
+                <div class="card-header bg-secondary text-white text-uppercase"><i class="fa fa-list"></i> Categories</div>
+                <ul class="list-group category_block">
+                    <li class="list-group-item"><a href="category">All</a></li>
+                    {% set cat = {} %}
+                        {% for article in articles %}
+                            {% if article.getCategory().getCategoryName() not in cat|keys %}
+                            {% set cat = cat|merge({(article.getCategory().getCategoryName()) : article.getCategory().getId()}) %}
+                            {% endif %}
+                        {% endfor %}
+                    
+                  
+                   {% for name,id in cat %}
+                    <li class="list-group-item "><a href="{{ path('category_fetch',{'category_id': id}) }}">{{name}}</a></li>
+                   {% endfor %}
+                
+                </ul>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="card-header bg-success text-white text-uppercase">Last product</div>
+                <div class="card-body">
+                    <img class="img-fluid" src="img/pc1.jpg" />
+                    <h5 class="card-title">Asus</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="bloc_left_price">450 DT</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+            {% for article in category %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{{article.getImage()}}" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title"><a href="{{ path('product',{'id': article.getId()}) }}" title="View Product">{{article.getProductName()}}</a></h4>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="btn btn-danger btn-block">{{article.getPrice()}}</p>
+                                </div>
+                                <div class="col">
+                                    <a href="{{ path('app_add',{'id' : article.getId()}) }}" class="btn btn-success btn-block">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

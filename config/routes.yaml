@@ -1,0 +1,24 @@
+index:
+    path: /
+    controller: App\Controller\IndexController::index
+category_fetch:
+    path: /category/{category_id}
+    controller: App\Controller\CategoryController::categoryFetch
+category:
+    path: /category
+    controller: App\Controller\CategoryController::index
+cart:
+    path: /cart
+    controller: App\Controller\CartController::index
+product:
+    path: /product/{id}
+    controller: App\Controller\ProductController::index
+contact:
+    path: /contact
+    controller: App\Controller\ContactController::index
+app_add:
+    path: /add/{id}
+    controller: App\Controller\CartController::add
+app_remove:
+    path: /remove/{id}
+    controller: App\Controller\CartController::remove
